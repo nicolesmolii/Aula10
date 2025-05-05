@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios Aula 10</title>
+</head>
+
+<body>
+    <h1>Exercício 5</h1>
+    <script>
+        async function exibirInfoCep(cep) {
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                if (!response.ok) {
+                    throw new Error("Erro ao conectar com ViaCEP");
+                }
+
+                const dados = await response.json();
+
+                if (dados.erro) {
+                    throw new Error("CEP não encontrado.");
+                }
+
+                console.log(`CEP: ${dados.cep}, Logradouro: ${dados.logradouro}, Bairro: ${dados.bairro}, Cidade: ${dados.localidade}, UF: ${dados.uf}`);
+            } catch (erro) {
+                console.error("Erro:", erro.message);
+            }
+        }
+
+        exibirInfoCep("01001000");
+        exibirInfoCep("abc");
+        exibirInfoCep("99999999");
+    </script>
+</body>
+
+</html>
